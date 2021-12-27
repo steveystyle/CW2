@@ -1,0 +1,39 @@
+- name: A playbook to install Kubectl and Minikube
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+  - name: 1. Update APT Package Manager
+    apt:
+      update_cache: yes
+
+  - name: 2. install apt-transpot-https
+    apt:
+      name: apt-transport-https
+      state: present
+
+  - name: 3. Add PGP Key
+    apt_key: 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: 4. Add apt repository
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+      filename: kubernetes.list  
+
+  - name: 5. Install kubectl
+    apt:
+      name: kubectl
+      update_cache: yes
+
+  - name: 6. Download minikube
+    get_url:
+      url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd69
+      dest: /usr/local/bin/minikube
+      mode: a+x
+
+  - name: 7. Start minikube
+    command: minikube start
