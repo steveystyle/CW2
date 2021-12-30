@@ -3,7 +3,7 @@ pipeline{
     registry = "steveystyle/server_app"
     registryCredential = 'dockerhub'
     dockerImage = ''
-    bNO = $BUILD_NUMBER + ".0" 
+    bNO = "$BUILD_NUMBER" + ".0" 
   }
   
   agent any
