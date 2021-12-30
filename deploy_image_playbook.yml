@@ -9,6 +9,6 @@
       update_cache: yes
   
   - name: 2. Deploy Image
-    shell:
-      cmd: kubectl create deployment server_app --image=steveystyle/server_app:latest
-      
+    command: kubectl create deployment server-app --image=steveystyle/server_app:latest
+    become: no
+     
