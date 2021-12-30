@@ -1,12 +1,10 @@
 pipeline{  
-  agent any
+  agent{
+    dockerfile true
+  }
   stages{
     
-    stage('Clone Git'){ 
-      steps{
-        git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/steveystyle/cw2.git'
-      }
-    }
+    
     
     stage('Build Image'){
       steps{
