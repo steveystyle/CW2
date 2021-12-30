@@ -39,7 +39,7 @@ pipeline{
       steps{
         script {
           dockerImage.inside {
-            sh curl localhost:8080
+            sh 'curl localhost:8080'
           }
         }
       }
