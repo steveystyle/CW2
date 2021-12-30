@@ -9,5 +9,5 @@
       update_cache: yes
       
   - name: 2. Create a Deployment and Service from YAML file
-  command: kubectl apply -f server-app-deployment.yaml
-  become: no
+    command: kubectl apply -f server-app-deployment.yaml
+    become: no
