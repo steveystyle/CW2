@@ -11,3 +11,11 @@
   - name: 2. Create a Deployment and Service from YAML file
     command: kubectl apply -f server-app-deployment.yaml
     become: no
+    
+  - name: 3. Scaling App for Future Rolling Updates
+    command: kubectl scale deployments/server-app --replicas=4
+    become: no
+  
+  - name: 4. Update APT Package Manager
+    apt:
+      update_cache: yes
