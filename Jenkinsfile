@@ -38,7 +38,7 @@ pipeline{
     stage('Build Test') {
       steps{
         script {
-          dockerImage.run(" -publish 8080:8080 -v ${env.WORKSPACE}/src:/app/src")
+          dockerImage.run(" --publish 8080:8080 -v ${env.WORKSPACE}/src:/app/src")
           sh 'curl localhost:8080'
         }
       }
