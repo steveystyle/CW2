@@ -42,6 +42,7 @@ pipeline{
           dockerImage.inside
         }
       }
+    }
           
     stage('Clean'){      
       steps{
