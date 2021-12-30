@@ -1,7 +1,7 @@
 pipeline{
   
   environment {
-    registry = "steveystyle/server_app"
+    registry = "steveystyle/server_app/"
     registryCredential = 'dockerhub'
   }
   
