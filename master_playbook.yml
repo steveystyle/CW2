@@ -1,0 +1,7 @@
+hosts: localhost
+tasks:
+  - name: 1. Run build s1
+    import_playbook: build_s1_install_and_start_playbook.yml
+  
+  - name: 2. Run build s2
+    import_playbook: build_s2_deploy_and_scale_playbook.yml
