@@ -7,7 +7,9 @@
   - name: 1. Update APT Package Manager
     apt:
       update_cache: yes
-  
-  - name: 2. Deploy Image
-    command: kubectl create deployment server-app --image=steveystyle/server_app:1.0
-    become: no
+      
+  - name: 2. Create a Deployment and Service from YAML file
+  k8s:
+    state: present
+    src: ./server-app-deployment.yaml
+    update_cache: yes
