@@ -8,9 +8,10 @@ pipeline{
   agent any
   
   stages{
-    stage('Clone Git'){
+    
+    stage('Clone Git'){ 
       steps{
-        git 'https://github.com/steveystyle/cw2.git'
+        git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/steveystyle/cw2.git'
       }
     }
     
