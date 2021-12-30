@@ -11,7 +11,7 @@ pipeline{
     
     stage('Clone Git'){ 
       steps{
-        git 'https://github.com/steveystyle/cw2.git/'
+        git 'https://github.com/steveystyle/cw2.git'
       }
     }
     
