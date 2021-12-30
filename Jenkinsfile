@@ -3,6 +3,7 @@ pipeline{
     registry = "steveystyle/server_app"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    testContainer = ''
     bNO = "$BUILD_NUMBER" + ".0" 
   }
   
@@ -34,6 +35,14 @@ pipeline{
       }
     }
     
+    stage('Build Test'){
+      
+      steps{
+        script{
+          dockerImage.inside
+        }
+      }
+          
     stage('Clean'){      
       steps{
         sh "docker rmi $registry:$bNo"
