@@ -10,16 +10,16 @@ pipeline{
     
     stage('Build Image'){
       steps{
-        sh """
-      docker build -t server_app .
-      """
+        
+        def newImage = docke.build("server-app:${env.BUILD}")
+
       }
     }
     
-    stage('test'){
+    stage('Push'){
       
       steps{
-        echo 'testing the app..'
+        newImage.push('latest')
       }
     }
     
