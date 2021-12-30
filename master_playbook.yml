@@ -8,8 +8,6 @@
     apt:
       update_cache: yes
       
-  - name: 2. Run build s1
+  - name: 2. Run build s1 and s2
     import_playbook: build_s1_install_and_start_playbook.yml
-  
-  - name: 3. Run build s2
     import_playbook: build_s2_deploy_and_scale_playbook.yml
