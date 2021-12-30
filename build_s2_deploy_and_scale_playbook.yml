@@ -9,7 +9,5 @@
       update_cache: yes
       
   - name: 2. Create a Deployment and Service from YAML file
-  k8s:
-    state: present
-    src: ./server-app-deployment.yaml
-    update_cache: yes
+  command: kubectl apply -f server-app-deployment.yaml
+  become: no
