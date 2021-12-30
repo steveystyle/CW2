@@ -1,15 +1,12 @@
 pipeline{  
-  agent {
-    dockerfile {
-      filename 'Dockerfile'
-    }
+  agent {dockerfile true}
   }
   
   stages{  
     stage('Build Image'){
       steps{
         script{
-          def newImage = docker.build "server-app:${env.BUILD}"
+          def newImage = docker.build("server-app:${env.BUILD}")
         }
       }
     }
