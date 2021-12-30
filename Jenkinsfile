@@ -5,9 +5,15 @@ pipeline{
     dockerImage = ''
   }
   
-  agent {dockerfile true}
+  agent any
   
-  stages{  
+  stages{
+    stage('Clone Git'){
+      steps{
+        git 'https://github.com/steveystyle/cw2.git'
+      }
+    }
+    
     stage('Build Image'){
       steps{
         script{
@@ -26,10 +32,9 @@ pipeline{
       }
     }
     
-    stage('deploy'){
-      
+    stage('Clean'){      
       steps{
-        echo 'deploying the app..'
+        sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
   }
