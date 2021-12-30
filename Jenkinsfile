@@ -1,20 +1,27 @@
 pipeline{  
-  agent {dockerfile true}
+  enviroment{
+    registry = "steveystyle/server_app"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+  }
   
+  agent {dockerfile true}
   
   stages{  
     stage('Build Image'){
       steps{
         script{
-          def newImage = docker.build("server-app:${env.BUILD}")
+          dockerImage = docker.build registry + ":$BUILD_NUMBER" 
         }
       }
     }
     
-    stage('Push'){
+    stage('Push Image'){
       steps{
         script{
-          newImage.push('latest')
+          docker.withRegistry( '', registryCredential ){
+            dockerImage.push()
+          }
         }  
       }
     }
