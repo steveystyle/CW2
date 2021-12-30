@@ -1,13 +1,7 @@
-- name: Master Playbook
-  hosts: localhost
-  user: ubuntu
-  become: yes
+/master_playbook.yml
+---
+- name: build stage 1
+  import_playbook: build_s1_install_and_start_playbook.yml
 
-  tasks:
-  - name: 1. Update APT Package Manager
-    apt:
-      update_cache: yes
-      
-  - name: 2. Run build s1 and s2
-    import_playbook: build_s1_install_and_start_playbook.yml
-    import_playbook: build_s2_deploy_and_scale_playbook.yml
+- name: build stage 2
+  import_playbook: build_s2_deploy_and_scale_playbook.yml
