@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: server-app
+  name: server-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: server-app
+    spec:
+      containers:
+      - image: steveystyle/server_app
+        imagePullPolicy: Always
+        name: server-app
+        resources:           
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 200m
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node-port-service
+  labels:
+    run: node-port-service
+spec:
+  ports:
+  - port: 8080
+  selector:
+    run: server-app
+  type: NodePort
+status:
+  loadBalancer: {}
