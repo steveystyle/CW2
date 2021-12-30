@@ -10,9 +10,9 @@ pipeline{
     
     stage('Build Image'){
       steps{
-        
-        def newImage = docke.build("server-app:${env.BUILD}")
-
+        script{
+          def newImage = docke.build("server-app:${env.BUILD}")
+        }
       }
     }
     
