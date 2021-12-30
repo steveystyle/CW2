@@ -3,6 +3,7 @@ pipeline{
     registry = "steveystyle/server_app"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    bNO = $BUILD_NUMBER + .0 
   }
   
   agent any
@@ -18,7 +19,7 @@ pipeline{
     stage('Build Image'){
       steps{
         script{
-          dockerImage = docker.build registry + ":$BUILD_NUMBER.0" 
+          dockerImage = docker.build registry + ":$bNo" 
         }
       }
     }
@@ -35,7 +36,7 @@ pipeline{
     
     stage('Clean'){      
       steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
+        sh "docker rmi $registry:$bNo"
       }
     }
   }
