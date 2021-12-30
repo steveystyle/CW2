@@ -11,7 +11,7 @@ pipeline{
     stage('Build Image'){
       steps{
         script{
-          def newImage = docke.build("server-app:${env.BUILD}")
+          def newImage = docker.build("server-app:${env.BUILD}")
         }
       }
     }
