@@ -1,7 +1,15 @@
-hosts: localhost
-tasks:
-  - name: 1. Run build s1
+- name: Master Playbook
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+  - name: 1. Update APT Package Manager
+    apt:
+      update_cache: yes
+      
+  - name: 2. Run build s1
     import_playbook: build_s1_install_and_start_playbook.yml
   
-  - name: 2. Run build s2
+  - name: 3. Run build s2
     import_playbook: build_s2_deploy_and_scale_playbook.yml
