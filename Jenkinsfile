@@ -1,17 +1,19 @@
-pipeline{
-  
-  def app
-  
-  
-  
+pipeline{  
+  agent any
   stages{
     
     stage('Clone Git'){ 
-      checkout scm
+      steps{
+        git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/steveystyle/cw2.git'
+      }
     }
     
     stage('Build Image'){
-      app = docker.build("steveystyle/server_app")
+      steps{
+        sh """
+      docker build -t server_app .
+      """
+      }
     }
     
     stage('test'){
