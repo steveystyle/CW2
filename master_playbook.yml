@@ -1,5 +1,5 @@
 name: master_playbook.yml
----
+
 - name: build stage 1
   import_playbook: build_s1_install_and_start_playbook.yml
 
