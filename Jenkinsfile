@@ -17,9 +17,10 @@ pipeline{
     }
     
     stage('Push'){
-      
       steps{
-        newImage.push('latest')
+        script{
+          newImage.push('latest')
+        }  
       }
     }
     
