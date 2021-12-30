@@ -1,0 +1,14 @@
+- name: A playbook to deploy a custom docker image to minikube
+  hosts: localhost
+  user: ubuntu
+  become: yes
+  
+  tasks:
+  - name: 1. Update APT Package Manager
+    apt:
+      update_cache: yes
+  
+  - name: 2. Deploy Image
+    shell:
+      cmd: kubectl create deployment server_app --image=steveystyle/server_app:latest
+      
