@@ -1,26 +1,17 @@
 pipeline{
   
-  environment {
-    registry = "steveystyle/server_app/"
-    registryCredential = 'dockerhub'
-  }
+  def app
   
-  agent any
+  
   
   stages{
     
     stage('Clone Git'){ 
-      steps{
-        git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/steveystyle/cw2.git'
-      }
+      checkout scm
     }
     
     stage('Build Image'){
-      steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
-        }  
-      }
+      app = docker.build("steveystyle/server_app")
     }
     
     stage('test'){
