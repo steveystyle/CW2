@@ -35,14 +35,16 @@ pipeline{
       }
     }
     
-    stage('Build Test'){
-      
+    stage('Build Test') {
       steps{
-        script{
-          dockerImage.inside
+        script {
+          dockerImage.inside {
+            sh curl localhost:8080
+          }
         }
       }
     }
+    
           
     stage('Clean'){      
       steps{
