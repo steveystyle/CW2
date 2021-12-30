@@ -1,18 +1,21 @@
 pipeline{
+  
   enviroment {
     registry = "steveystyle/server_app"
     registryCredential = 'dockerhub'
+  }
   
   agent any
   
   stages{
     
-    stage("Clone Git"){ 
+    stage('Clone Git'){ 
       steps{
         git 'https://github.com/steveystyle/cw2.git/'
       }
     }
-    stage("Build Image"){
+    
+    stage('Build Image'){
       steps{
         script {
           docker.build registry + ":$BUILD_NUMBER"
@@ -20,14 +23,14 @@ pipeline{
       }
     }
     
-    stage("test"){
+    stage('test'){
       
       steps{
         echo 'testing the app..'
       }
     }
     
-    stage("deploy"){
+    stage('deploy'){
       
       steps{
         echo 'deploying the app..'
