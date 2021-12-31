@@ -38,7 +38,7 @@ pipeline{
     stage('Build Test') {
       steps{
         script {
-          docker run --rm -p8080:8080 -e  dockerImage
+          dockerImage.run("-v ${env.WORKSPACE}/src:/app/src")
           
           sh 'curl localhost:8080'
         }
@@ -51,5 +51,4 @@ pipeline{
         sh "docker rmi $registry:$bNo"
       }
     }
-  }
-}
+  }kub
