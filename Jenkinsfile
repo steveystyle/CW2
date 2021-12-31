@@ -40,7 +40,7 @@ pipeline{
         script {
           dockerImage.run("-v ${env.WORKSPACE}/src:/app/src")
           
-          sh 'curl localhost:8080'
+          sh './testscript.sh'
         }
       }
     }
