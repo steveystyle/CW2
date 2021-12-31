@@ -51,4 +51,5 @@ pipeline{
         sh "docker rmi $registry:$bNo"
       }
     }
-  }kub
+  }
+}
