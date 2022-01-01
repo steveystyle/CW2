@@ -41,7 +41,9 @@ pipeline{
       steps{
         script{
           dockerImage.inside{
+            catchError{
             sh 'node serrver.js &'
+            }
           }
         }
       }
