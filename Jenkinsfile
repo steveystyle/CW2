@@ -2,7 +2,8 @@ pipeline{
   environment{
     registry = "steveystyle/server-app"
     registryCredential = 'dockerhub'
-    dockerImage = ''
+    dockerImage = '' 
+    result = ''
     bNO = "$BUILD_NUMBER" + ".0"
     CI = 'true'
   }
