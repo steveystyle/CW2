@@ -43,5 +43,3 @@ spec:
   selector:
     run: server-app
   type: NodePort
-status:
-  loadBalancer: {}
