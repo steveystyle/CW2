@@ -1,10 +1,11 @@
 pipeline{  
   environment{
-    registry = "steveystyle/server_app"
+    registry = "steveystyle/server-app"
     registryCredential = 'dockerhub'
     dockerImage = ''
     testContainer = ''
-    bNO = "$BUILD_NUMBER" + ".0" 
+    bNO = "$BUILD_NUMBER" + ".0"
+    CI = 'true'
   }
   
   agent any
@@ -20,7 +21,7 @@ pipeline{
     stage('Build Image'){
       steps{
         script{
-          dockerImage = docker.build registry + ":$bNo" 
+          dockerImage = docker.build registry + ":$bNo"
         }
       }
     }
@@ -37,16 +38,17 @@ pipeline{
     
     stage('Build Test') {
       steps{
-        script {
-          dockerImage.run("-v ${env.WORKSPACE}/src:/app/src")
-          
-          sh './testscript.sh'
+        script{
+          dockerImage.inside{          
+            sh 'node server.js &'
+            sh './testscript.sh'
+          }
         }
       }
     }
-    
-          
-    stage('Clean'){      
+  }
+  post{ 
+    always{ 
       steps{
         sh "docker rmi $registry:$bNo"
       }
