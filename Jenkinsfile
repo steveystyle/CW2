@@ -49,7 +49,7 @@ pipeline{
   
   post{ 
     success{
-      sh 'curl $(minikube ip):31676/version'
+      sh 'curl localhost:8080/version'
       sh "docker rmi $registry:$bNo" 
     }
     failure{
