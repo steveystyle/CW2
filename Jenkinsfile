@@ -41,7 +41,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{
-            sh node serrver.js &
+            sh 'node serrver.js &'
           }
         }
       }
