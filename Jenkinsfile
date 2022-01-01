@@ -44,10 +44,7 @@ pipeline{
               script: "node serrver.js -m shell -h project -p max4 -i local &",
               returnStatus: true
             )
-            if (result != 0) {
-              currentBuild.result = 'failure'
-              error('Failed to build')
-            } 
+            echo result
           }
         }
       }
