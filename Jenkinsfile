@@ -49,9 +49,10 @@ pipeline{
   
   post{ 
     success{
-      sh 'set image deployments/server-app server-app=$registry:$bNo' 
+      sh "set image deployments/server-app server-app=$registry:$bNo"
+      sh "docker rmi $registry:$bNo" 
     }
-    always{
+    failure{
         sh "docker rmi $registry:$bNo"      
     }
   }
