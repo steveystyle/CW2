@@ -35,27 +35,22 @@ pipeline{
         }  
       }
     }
-    stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
     
     stage('Build Test') {
       steps{
         script{
           dockerImage.inside{          
-            sh 'node server.js'
+            sh 'curl localhost:8080'
           }
         }
       }
     }
-    
-          
-    stage('Clean'){      
-      steps{
-        sh "docker rmi $registry:$bNo"
+    post{ 
+      always{ 
+        steps{
+          sh "docker rmi $registry:$bNo"
+        }
       }
-    }
+    }        
   }
 }
