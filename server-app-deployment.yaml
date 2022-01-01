@@ -21,7 +21,7 @@ spec:
         app: server-app
     spec:
       containers:
-      - image: steveystyle/server_app
+      - image: steveystyle/server-app
         imagePullPolicy: Always
         name: server-app
         resources:           
