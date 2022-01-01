@@ -30,16 +30,3 @@ spec:
           requests:
             cpu: 200m
 status: {}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: node-port-service
-  labels:
-    run: node-port-service
-spec:
-  ports:
-  - port: 8080
-  selector:
-    run: server-app
-  type: NodePort
