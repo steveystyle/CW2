@@ -40,12 +40,15 @@ pipeline{
     stage('Build Test') {
       steps{
         script{
-          dockerImage.inside{
-            result = sh (
-              script: "node server.js &",
-              returnStatus: true
-            )
-            echo $result
+          try {
+            dockerImage.inside{
+              result = sh (
+                script: "node server.js &",
+                returnStatus: true
+              )
+            }
+          } catch(Exception e) {
+            error "Program failed, please read logs..."
           }
         }
       }
