@@ -40,8 +40,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{          
-            sh 'node server.js &'
-            sh './testscript.sh'
+            sh 'node server.jsl &'
           }
         }
       }
