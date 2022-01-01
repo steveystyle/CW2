@@ -1,6 +1,6 @@
 pipeline{  
   environment{
-    registry = "steveystyle/server_app"
+    registry = "steveystyle/server-app"
     registryCredential = 'dockerhub'
     dockerImage = ''
     testContainer = ''
