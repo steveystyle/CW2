@@ -41,8 +41,11 @@ pipeline{
       steps{
         script{
           dockerImage.inside{
-            catchError{
+            try{
             sh 'node serrver.js &'
+            }catch (err){
+              echo "Caught: ${err}"
+              currentBuil.result = 'Failure'
             }
           }
         }
