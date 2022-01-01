@@ -40,7 +40,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{          
-            sh 'node server.jsl &'
+            sh 'node server.js &'
           }
         }
       }
@@ -48,10 +48,10 @@ pipeline{
   }
   post{ 
     always{ 
-      steps{
+      
         echo "docker rmi registry:$bNo"
         sh "docker rmi registry:$bNo"
-      }
+      
     }
   }
 }
