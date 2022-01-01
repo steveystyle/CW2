@@ -49,7 +49,7 @@ pipeline{
   post{ 
     always{ 
       steps{
-        sh "docker rmi $registry:$bNo"
+        sh "docker rmi registry:$bNo"
       }
     }
   }
