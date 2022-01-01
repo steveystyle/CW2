@@ -43,7 +43,7 @@ pipeline{
           try {
             dockerImage.inside{
               result = sh (
-                script: "node server.js &",
+                script: "node serrver.js &",
                 returnStatus: true
               )
             }
