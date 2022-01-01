@@ -39,7 +39,7 @@ pipeline{
     stage('Build Test') {
       steps{
         script{
-          dockerImage.inside{          
+          dockerImage.inside(' --publish 8080:8080'{          
             sh 'curl localhost:8080'
           }
         }
