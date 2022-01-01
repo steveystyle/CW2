@@ -49,7 +49,7 @@ pipeline{
   
   post{ 
     success{
-      sh 'curl localhost:8080/version'
+      sh 'curl localhost:8080/kubectl set image deployments/server-app server-app=$registry:$bNo'
       sh "docker rmi $registry:$bNo" 
     }
     failure{
