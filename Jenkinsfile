@@ -42,7 +42,7 @@ pipeline{
         script{
           dockerImage.inside{
             result = sh (
-              script: "node serrver.js -m shell -h project -p max4 -i local &",
+              script: "node server.js -m shell -h project -p max4 -i local &",
               returnStatus: true
             )
             echo result.toString()
