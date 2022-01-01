@@ -41,6 +41,8 @@ pipeline{
       steps{     
         script{
           dockerImage.inside{
+            def res = sh(script: "node server.js -m shell -h project -p max4 -i local &", returnStatus: true)
+                       println("cmd: $it res $res")
             result = sh (
               script: "node server.js -m shell -h project -p max4 -i local &",
               returnStatus: true
