@@ -49,7 +49,7 @@ pipeline{
   post{ 
     always{ 
       
-        echo "docker rmi $registry:$bNo"
+        echo "$registry:$bNo"
         sh "docker rmi $registry:$bNo"
       
     }
