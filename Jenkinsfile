@@ -48,7 +48,9 @@ pipeline{
   
   post{ 
     success{
-      sh '/home/ubuntu/cw2/kubectl set image deployments/server-app server-app=$registry:$bNo'
+      kubeconfig(credentialsId: 'clusterk8sconfig', serverUrl: '') {
+        sh '/home/ubuntu/cw2/kubectl set image deployments/server-app server-app=$registry:$bNo'
+      }
       sh "docker rmi $registry:$bNo" 
     }
     failure{
