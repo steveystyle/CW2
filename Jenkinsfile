@@ -40,7 +40,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{          
-            sh 'docker inspect $(docker ps |grep {{image id}}|cut -d ' ' -f 1)|grep IPAddress|cut -d '"' -f 4'
+            sh 'docker inspect $(docker ps |grep dockerImage|cut -d ' ' -f 1)|grep IPAddress|cut -d '"' -f 4'
           }
         }
       }
