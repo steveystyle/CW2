@@ -40,15 +40,8 @@ pipeline{
     stage('Build Test') {
       steps{
         script{
-          try {
-            dockerImage.inside{
-              result = sh (
-                script: "node serrver.js &",
-                returnStatus: true
-              )
-            }
-          } catch(Exception e) {
-            error "Program failed, please read logs..."
+          dockerImage.inside{
+            sh node serrver.js &
           }
         }
       }
