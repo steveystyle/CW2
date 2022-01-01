@@ -40,7 +40,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{          
-            sh 'curl localhost:8080'
+            sh 'docker inspect $(docker ps |grep {{image id}}|cut -d ' ' -f 1)|grep IPAddress|cut -d '"' -f 4'
           }
         }
       }
