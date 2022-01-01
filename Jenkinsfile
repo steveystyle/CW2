@@ -48,8 +48,10 @@ pipeline{
   
   post{ 
     success{
-      kubeconfig(credentialsId: 'mykubeconfig',caCertificate: '', serverUrl: '') {
-        sh '/home/ubuntu/cw2/kubectl set image deployments/server-app server-app=$registry:$bNo'
+      withkubeConfig([credentialsId: 'mykubeconfig']) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl;
+        sh './kubectl get pods'
       }
       sh "docker rmi $registry:$bNo" 
     }
