@@ -1,6 +1,6 @@
 pipeline{  
   environment{
-    registry = "steveystyle/server_app:1.0"
+    registry = "steveystyle/server_app"
     registryCredential = 'dockerhub'
     dockerImage = ''
     testContainer = ''
@@ -21,7 +21,7 @@ pipeline{
     stage('Build Image'){
       steps{
         script{
-          dockerImage = docker.build registry 
+          dockerImage = docker.build registry + ":$bNo"
         }
       }
     }
