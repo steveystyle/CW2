@@ -40,7 +40,7 @@ pipeline{
       steps{
         script{
           dockerImage.inside{          
-            sh 'curl localhost:8080'
+            sh 'node server.js | ^C'
           }
         }
       }
