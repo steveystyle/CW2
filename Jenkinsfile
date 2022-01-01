@@ -46,12 +46,13 @@ pipeline{
       }
     }
   }
+  
   post{ 
-    always{ 
-      
-        echo "$registry:$bNo"
-        sh "docker rmi $registry:$bNo"
-      
+    success{
+      sh 'set image deployments/server-app server-app=$registry:$bNo' 
+    }
+    always{
+        sh "docker rmi $registry:$bNo"      
     }
   }
 }
