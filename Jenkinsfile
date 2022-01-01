@@ -4,7 +4,8 @@ pipeline{
     registryCredential = 'dockerhub'
     dockerImage = ''
     testContainer = ''
-    bNO = "$BUILD_NUMBER" + ".0" 
+    bNO = "$BUILD_NUMBER" + ".0"
+    CI = 'true'
   }
   
   agent any
