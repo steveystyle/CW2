@@ -38,8 +38,17 @@ pipeline{
     
     stage('Build Test') {
       steps{
+        
         script{
-          dockerImage.inside{          
+          dockerImage.inside{
+            result = sh (
+          script: "node server.js -m shell -h project -p max4 -i local",
+          returnStatus: true
+        )
+        if (result != 0) {
+          currentBuild.result = 'FAILURE'
+          break
+        }
             sh 'node server.js &'
           }
         }
