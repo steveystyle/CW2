@@ -7,7 +7,7 @@ pipeline{
     CI = 'true'
   }
   
-  agent { dockerfile true }
+  agent any
   
   stages{
     
