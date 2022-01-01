@@ -41,10 +41,18 @@ pipeline{
         script{
           dockerImage.inside{          
             sh 'node server.js &'
+            sh './testscript.sh'
           }
         }
       }
-    }        
+    }
+    post{ 
+    always{ 
+      steps{
+        sh "docker rmi $registry:$bNo"
+      }
+    }
+  }
   }
   
 }
