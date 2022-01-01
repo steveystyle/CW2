@@ -3,12 +3,11 @@ pipeline{
     registry = "steveystyle/server-app"
     registryCredential = 'dockerhub'
     dockerImage = ''
-    testContainer = ''
     bNO = "$BUILD_NUMBER" + ".0"
     CI = 'true'
   }
   
-  agent any
+  agent { dockerfile true }
   
   stages{
     
