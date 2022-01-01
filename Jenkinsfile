@@ -1,4 +1,4 @@
-Ipipeline{  
+pipeline{  
   environment{
     registry = "steveystyle/server-app"
     registryCredential = 'dockerhub'
