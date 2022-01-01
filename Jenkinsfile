@@ -49,7 +49,7 @@ pipeline{
           currentBuild.result = 'FAILURE'
           break
         }
-            sh 'node server.js &'
+            
           }
         }
       }
