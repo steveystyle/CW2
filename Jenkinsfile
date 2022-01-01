@@ -46,11 +46,5 @@ pipeline{
       }
     }        
   }
-  post{ 
-    always{ 
-      steps{
-        sh "docker rmi $registry:$bNo"
-      }
-    }
-  }
+  
 }
