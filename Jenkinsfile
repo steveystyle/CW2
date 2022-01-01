@@ -49,7 +49,8 @@ pipeline{
   
   post{ 
     success{
-      sh ("kubectl set image deployments/server-app server-app=$registry:$bNo")
+      sh 'cd /'
+      sh 'pwd'
       sh "docker rmi $registry:$bNo" 
     }
     failure{
