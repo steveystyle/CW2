@@ -39,13 +39,13 @@ pipeline{
     
     stage('Build Test') {
       steps{
-        dockerImage.inside{
-          script{
+        script{
+          dockerImage.inside{
             result = sh (
-              script: "node server.js -m shell -h project -p max4 -i local &",
+              script: "node server.js &",
               returnStatus: true
             )
-            echo result.toString()
+            echo $result
           }
         }
       }
