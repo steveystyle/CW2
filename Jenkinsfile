@@ -16,7 +16,9 @@ node {
     stage('Test image') {
       APP.inside {
         try {
-          println InetAddress.localHost.hostAddress
+          echo"${localhost}"
+          echo'localhost'
+          echo"${env.localhost}"
           echo 'hello'
           // sh 'node server.js &'
         } catch (err) {
@@ -26,11 +28,8 @@ node {
       }
     }
     stage('Test withRun') {
-      APP.withRun('--rm -it --expose=8000') {
-        println InetAddress.localHost.hostAddress
-        println hostAddress
-        println hostname
-
+      APP.withRun('--rm -it --expose=8080') {
+        
       }
     }
     stage('Push image') {
