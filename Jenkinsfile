@@ -62,10 +62,10 @@ pipeline {
         sh 'chmod u+x ./kubectl'
         sh "./kubectl set image deployments/server-app server-app=${env.dockerImage}"
       }
-      sh "docker rmi ${env.dockerImage}"
+      sh "docker rmi dockerImage"
     }
     failure {
-      sh "docker rmi ${env.dockerImage}"
+      sh "docker rmi dockerImage"
     }
   }
 }
