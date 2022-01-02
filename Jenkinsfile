@@ -40,8 +40,10 @@ pipeline {
           dockerImage.inside {
             try {
               ans3 = fileExists file: 'serrver.js'
-              echo"${ans3}"
-              sh 'node server.js; kill'
+              sh 'curl 172.17.0.1:8080'
+              sh 'curl 192.168.99.1:8080'
+
+              //sh ('node server.js; kill')
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
