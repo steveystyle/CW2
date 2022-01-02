@@ -41,7 +41,7 @@ pipeline {
             try {
               ans3 = fileExists file: 'serrver.js'
               echo"${ans3}"
-              ans = sh(script: 'node serrver.js &', returnStdout: true)
+              ans = sh(script: 'node serrver.js', returnStdout: true)
               echo"${ans}"
             } catch (err) {
               echo "Caught: ${err}"
