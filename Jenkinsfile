@@ -11,15 +11,14 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          echo"${CHECK_URL}"
           ANS = sh script: 'node serrver.js &', returnStatus: true
           ANS2 = sh script: 'node server.js &', returnStatus: true
+        echo"${ANS}"
+        echo"${ANS2}"
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
         }
-        echo"${ANS}"
-        echo"${ANS2}"
       }
     }
     stage('Push image') {
