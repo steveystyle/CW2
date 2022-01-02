@@ -11,8 +11,9 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          def ANS = sh script: "node serrver.js &", returnStatus: true
-          def ANS2 = sh script: "node server.js &", returnStatus: true
+          echo"${CHECK_URL}"
+          ANS = sh script: 'node serrver.js &', returnStatus: true
+          ANS2 = sh script: 'node server.js &', returnStatus: true
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
