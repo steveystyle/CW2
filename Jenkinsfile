@@ -41,7 +41,6 @@ pipeline {
             try {
               // ans3 = fileExists file: 'serrver.js'
               sh 'ip addr | grep global'
-              sh 'curl 172.17.0.2:8080'
               sh 'node server.js &'
               sh 'curl 172.17.0.2:8080'
             } catch (err) {
