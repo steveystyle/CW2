@@ -12,13 +12,12 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          ANS = sh(returnStatus: true) 'node serrver.js &'
+          ANS = sh(returnStdout: true) 'node serrver.js &'
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
         }
         echo"${ANS}"
-        echo"${err}"
       }
     }
     stage('Push image') {
