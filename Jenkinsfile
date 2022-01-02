@@ -2,7 +2,7 @@ node {
   
   def app
     
-  withEnv(['CI=true','REGISTRY=steveystyle/server-app','REGISTRY_CREDENTIAL=dockerhub','B_NO=env.BUILD_NUMBER + .0']){
+  withEnv(['CI=true','REGISTRY=steveystyle/server-app','REGISTRY_CREDENTIAL=dockerhub','B_NO=$BUILD_NUMBER.0']){
     stage('Clone repository') {
         checkout scm
     }
