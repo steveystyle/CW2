@@ -25,7 +25,7 @@ node {
       }
     }
     stage('Test withrun') {
-      APP.withRun('--rm --it') {
+      APP.withRun('--rm -it') {
         echo 'hello2'
       }
     }
