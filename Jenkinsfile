@@ -6,6 +6,10 @@ node {
     stage('Clone repository') {
         checkout scm
     }
+    
+    stage("Test"){
+      echo(REGISTRY + ":" + B_No)
+    }
 
     stage('Build image') {
       app = docker.build(REGISTRY:B_No)
