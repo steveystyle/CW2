@@ -7,7 +7,7 @@ pipeline {
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
-  agent { any }
+  agent any
   stages {
 
     stage('Clone Git') {
@@ -36,8 +36,8 @@ pipeline {
 
     stage('Build Test') {
       steps {
-        dockerImage.inside {
-          script {
+        script {
+          dockerImage.inside {
             try{
               def ANS = sh(script: 'node serrver.js &', returnStatus: true)
               def ANS2 = sh(script: 'node server.js &', returnStatus: true)
