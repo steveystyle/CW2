@@ -14,7 +14,7 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside('-it') {
+      APP.inside {
         try {
           echo 'hello'
           // sh 'node server.js &'
@@ -25,7 +25,7 @@ node {
       }
     }
     stage('Test withrun') {
-      APP.withRun('--rm -it') {
+      APP.withRun('--rm -it -p 8080:8080') {
         sh 'curl localhost:8080'
       }
     }
