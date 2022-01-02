@@ -8,7 +8,7 @@ node {
     }
     
     stage("Test"){
-      echo('REGISTRY + ":" + B_No')
+      echo(REGISTRY + ':' + B_No)
     }
 
     stage('Build image') {
