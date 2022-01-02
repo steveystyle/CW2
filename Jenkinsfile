@@ -39,7 +39,7 @@ pipeline {
           dockerImage.inside {
             try {
               ipString = sh 'ip addr show eth0 | awk '/inet / { gsub(/\/.*/,'',$2); print $2 } ''
-              echo ipString
+              echo "${ipString}"
               sh 'node server.js &'
               sh "${ipStrirg}:8080"
             } catch (err) {
