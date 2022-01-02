@@ -39,11 +39,11 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              ans3 = fileExists file: 'serrver.js'
+              // ans3 = fileExists file: 'serrver.js'
               sh 'ip addr | grep global'
-              //sh 'curl 172.17.0.1:8080'
-
-              //sh ('node server.js; kill')
+              sh 'curl 172.17.0.2:8080'
+              sh 'node server.js &'
+              sh 'curl 172.17.0.2:8080'
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
