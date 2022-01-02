@@ -8,7 +8,7 @@ node {
     }
     
     stage("Test"){
-      echo(REGISTRY + ':' + B_No)
+      echo(REGISTRY + ':' + ${env.BUILD_NUMBER} + ".0")
     }
 
     stage('Build image') {
