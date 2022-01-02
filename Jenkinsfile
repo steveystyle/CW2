@@ -11,7 +11,7 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          sh 'node server.js& exit 1'
+          sh 'node server.js&^C; exit 1'
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
