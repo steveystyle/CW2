@@ -13,11 +13,11 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      catchError(message: 'ERROR', stageResult: 'FAILURE') {
-        APP.inside {
+      APP.inside {
+          catchError(message: 'ERROR', stageResult: 'FAILURE') {
           sh 'node serrver.js &'
+          }
         }
-      }
     }
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
