@@ -9,6 +9,7 @@ node {
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
       echo"${env.REGISTRY}:${B_NO}"
       sh'docker ps'
+      sh'kubectl top'
     }
     stage('Build image') {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
@@ -16,7 +17,6 @@ node {
     stage('Test image') {
       APP.inside {
         try {
-          sh'docker ps'
           // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
