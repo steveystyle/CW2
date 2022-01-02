@@ -14,9 +14,9 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside('-p 8000:8000') {
+      APP.inside() {
         try {
-          sh 'curl -v localhost:8000'
+          sh 'curl localhost:8000'
         // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
