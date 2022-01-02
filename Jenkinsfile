@@ -4,7 +4,7 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
     ipString = ''
-    ipStringArr[] = ''
+    ipStringArr[] = new String[1]
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
