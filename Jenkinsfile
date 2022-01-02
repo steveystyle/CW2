@@ -38,10 +38,12 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              String ipString = sh 'ip addr show eth0 | awk "/inet / { gsub(/\/.*/," ",$2); print $2 } "'
+              String ipString = sh 'ip addr | grep global'
               echo "${ipString}"
-              sh 'node server.js &'
-              sh "${ipStrirg}:8080"
+              ipString = ipString.split('/', 1)
+              echo "${ipString}"
+              //sh 'node server.js &'
+              //sh "${ipStrirg}:8080"
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
