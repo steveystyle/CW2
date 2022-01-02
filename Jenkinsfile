@@ -19,8 +19,8 @@ node {
     }
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
-            app.push("${B_NO}")
-            app.push('latest')
+            APP.push("${B_NO}")
+            APP.push('latest')
       }
     }
     post {
