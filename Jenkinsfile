@@ -38,12 +38,15 @@ pipeline {
       steps {
         script {
           dockerImage.inside {
-            sh (try {
-              'node serrver.js &'
-            } catch(Exception e) {
+            try {
+              ans3 = fileExists file: 'serrver.js'
+              echo"${ans3}"
+              ans = sh('node serrver.js &', returnStdout: true).trim()
+              echo"${ans}"
+            } catch (e) {
               echo "Caught: ${e}"
               currentBuild.result = 'failure'
-            })
+            }
             try {
               ANS2 = sh(script: 'node server.js &', returnStatus: true)
             } catch (err) {
