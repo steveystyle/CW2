@@ -3,12 +3,12 @@ pipeline {
     registry = 'steveystyle/server-app'
     registryCredential = 'dockerhub'
     dockerImage = ''
+    ipString = ''
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
   agent any
   stages {
-
     stage('Clone Git') {
       steps {
         git branch: 'main', credentialsId: 'GitHub', url: 'https://github.com/steveystyle/cw2.git'
@@ -18,7 +18,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          dockerImage = docker.build "${env.registry}:${env.bNo}"
+          env.dockerImage = docker.build "${env.registry}:${env.bNo}"
         }
       }
     }
@@ -26,8 +26,8 @@ pipeline {
     stage('Push Image') {
       steps {
         script {
-          docker.withRegistry('', registryCredential) {
-            dockerImage.push()
+          docker.withRegistry('', env.registryCredential) {
+            env.dockerImage.push()
           }
         }
       }
@@ -36,12 +36,12 @@ pipeline {
     stage('Build Test') {
       steps {
         script {
-          dockerImage.inside {
+          env.dockerImage.inside {
             try {
-              String ipString = sh(script: 'ip addr | grep global', returnStdout: true)
-              echo "${ipString}"
-              ipString = ipString.split('/', 1)
-              echo "${ipString}"
+              env.ipString = sh(script: 'ip addr | grep global', returnStdout: true)
+              echo "${env.ipString}"
+              env.ipString = env.ipString.split('/', 1)
+              echo "${env.ipString}"
               //sh 'node server.js &'
               //sh "${ipStrirg}:8080"
             } catch (err) {
