@@ -19,11 +19,9 @@ node {
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
+          echo"blah${currentBuild.result}"
         }
       }
-    }
-    stage('Test2') {
-      echo"blah${currentBuild.result}"
     }
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
