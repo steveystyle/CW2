@@ -1,49 +1,41 @@
 node {
-  
-  def app
-  def B_NO = "${env.BUILD_NUMBER}.0"
-    
-  withEnv(['CI=true','REGISTRY=steveystyle/server-app','REGISTRY_CREDENTIAL=dockerhub']){
+  withEnv(['CI=true', 'REGISTRY=steveystyle/server-app', 'REGISTRY_CREDENTIAL=dockerhub']) {
+    APP = null
+    B_NO = "${env.BUILD_NUMBER}.0"
     stage('Clone repository') {
-        checkout scm
+      checkout scm
     }
-    
-    stage("Test"){
+    stage('Test') {
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
       echo"${env.REGISTRY}:${B_NO}"
     }
-
     stage('Build image') {
-      app = docker.build("${env.REGISTRY}:${env.BUILD_NUMBER}.0")
+      APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
-
     stage('Test image') {
-      app.inside {
+      APP.inside {
         sh 'node serrver.js &'
       }
     }
-
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
-            app.push(B_No)
-            app.push("latest")
-        }
+            app.push("${B_NO}")
+            app.push('latest')
+      }
     }
-}
-  
-  post{ 
-    SUCCESS{
+    post {
+    success {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
         sh 'chmod u+x ./kubectl'
-        sh "./kubectl set image deployments/server-app server-app=REGISTRY:B_No"
+        sh './kubectl set image deployments/server-app server-app='APP''
       }
-      sh 'docker rmi REGISTRY:B_No'
-      sh 'docker rmi app'
+      //sh 'docker rmi REGISTRY:B_No'
+      sh 'docker rmi 'APP''
     }
-    FAILURE{
-        sh 'docker rmi REGISTRY:B_No'
-        sh 'docker rmi app'
+    failure {
+        sh 'docker rmi 'APP''
+    }
     }
   }
 }
