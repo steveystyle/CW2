@@ -36,18 +36,31 @@ pipeline {
     stage('Build Test') {
       steps {
         script {
-          DOCKER_IMAGE.inside {
-            try {
-              def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
-              def IP_STRING_ARR_1 = IP_STRING.split('/')
-              def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
-              //sh "curl ${IP_STRING_ARR_2[1]}:8080"
-              //sh 'node server.js &'
-              sh "curl ${IP_STRING_ARR_2[1]}:8080"
-            } catch (err) {
-              echo "Caught: ${err}"
-              currentBuild.result = 'failure'
+          try {
+            DOCKER_IMAGE.inside {
+              when {
+                not{
+                  fileExists file: 'serrver.js'
+                }
+                steps {
+                  currentBuild.result = 'failure'
+                  error('Server.js file missing Image Build fail')
+                }
+              }
+              try {
+                def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
+                def IP_STRING_ARR_1 = IP_STRING.split('/')
+                def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
+                sh 'node server.js &'
+                sh "curl ${IP_STRING_ARR_2[1]}:8080"
+              } catch (err) {
+                echo "Caught: ${err}"
+                currentBuild.result = 'failure'
+              }
             }
+          } catch (e) {
+            echo "Caught: ${err}"
+            currentBuild.result = 'failure'
           }
         }
       }
