@@ -45,7 +45,7 @@ pipeline{
             sh 'node serrver.js &'
             }catch (err){
               echo "Caught: ${err}"
-              currentBuil.result = 'Failure'
+              currentBuild.result = 'Failure'
             }
           }
         }
