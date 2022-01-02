@@ -26,7 +26,7 @@ node {
     }
     stage('Test withRun') {
       APP.withRun('--rm -it') {
-        sh 'curl localhost:8080'
+        sh 'curl localhost:8000'
       }
     }
     stage('Push image') {
