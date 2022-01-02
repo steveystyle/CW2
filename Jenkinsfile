@@ -41,21 +41,13 @@ pipeline {
             try {
               ans3 = fileExists file: 'serrver.js'
               echo"${ans3}"
-              ans = sh(script: 'node serrver.js', returnStdout: true)
-              echo"${ans}"
+              sh 'node serrver.js & || { echo 'my_command failed' ; exit 1; }'
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
             }
-            try {
-              ANS4 = sh(script: 'node server.js &', returnStdout: true).trim()
-              echo"${ANS4}"
-            } catch (e) {
-              echo "Caught: ${err}"
-              currentBuild.result = 'failure'
-            }
           }
-        }
+        } 
       }
     }
   }
