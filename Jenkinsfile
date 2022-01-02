@@ -11,8 +11,8 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          ANS = sh script: 'node serrver.js &', returnStatus: true
-          ANS2 = sh script: 'node server.js &', returnStatus: true
+          def ANS = sh(script: 'node serrver.js &', returnStatus: true).trim
+          def ANS2 = sh(script: 'node server.js &', returnStatus: true).trim
         echo"${ANS}"
         echo"${ANS2}"
         } catch (err) {
