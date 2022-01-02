@@ -25,7 +25,7 @@ node {
       }
     }
     stage('Test withRun') {
-      APP.withRun('--rm -it -p 8080:8080') {
+      APP.withRun('--rm -it -p') {
         sh 'curl localhost:8080'
       }
     }
