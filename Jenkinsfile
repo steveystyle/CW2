@@ -3,7 +3,6 @@ pipeline {
     registry = 'steveystyle/server-app'
     registryCredential = 'dockerhub'
     dockerImage = ''
-    ipString = ''
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
@@ -39,9 +38,9 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              ipString = sh 'ip addr | grep global'
-              echo "${env.ipString}"
-              def ipStringArr = env.ipString.split('/', 1)
+              def ipString = sh 'ip addr | grep global'
+              echo "${ipString}"
+              def ipStringArr = ipString.split('/', 1)
               echo "${ipStringArr[0]}"
               //sh 'node server.js &'
               //sh "${ipStrirg}:8080"
