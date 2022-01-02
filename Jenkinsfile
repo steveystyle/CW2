@@ -40,8 +40,8 @@ pipeline {
           dockerImage.inside {
             try {
               ANS = sh(script: 'node serrver.js &', returnStatus: true)
-            } catch (err) {
-              echo "Caught: ${err}"
+            } catch(Exception e)
+              echo "Caught: ${e}"
               currentBuild.result = 'failure'
             }
             try {
