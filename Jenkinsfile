@@ -8,7 +8,7 @@ node {
     }
 
     stage('Build image') {
-      app = docker.build(REGISTRY)
+      app = docker.build(REGISTRY:B_No)
     }
 
     stage('Test image') {
@@ -26,7 +26,7 @@ node {
 }
   
   post{ 
-    success{
+    SUCCESS{
       withKubeConfig([credentialsId: 'mykubeconfig']) {
         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
         sh 'chmod u+x ./kubectl'
@@ -35,7 +35,7 @@ node {
       sh 'docker rmi REGISTRY:B_No'
       sh 'docker rmi app'
     }
-    failure{
+    FAILURE{
         sh 'docker rmi REGISTRY:B_No'
         sh 'docker rmi app'
     }
