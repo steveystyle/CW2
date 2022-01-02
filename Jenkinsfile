@@ -8,7 +8,7 @@ node {
     stage('Test') {
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
       echo"${env.REGISTRY}:${B_NO}"
-      echo 'InetAddress.localHost.hostAddress'
+      println InetAddress.localHost.hostAddress
     }
     stage('Build image') {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
@@ -16,6 +16,7 @@ node {
     stage('Test image') {
       APP.inside {
         try {
+          println InetAddress.localHost.hostAddress
           echo 'hello'
           // sh 'node server.js &'
         } catch (err) {
@@ -26,7 +27,8 @@ node {
     }
     stage('Test withRun') {
       APP.withRun('--rm -it --expose=8000') {
-        sh 'curl localhost:8000'
+        println InetAddress.localHost.hostAddress
+        sh 'curl -v localhost:8000'
       }
     }
     stage('Push image') {
