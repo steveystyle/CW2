@@ -1,9 +1,9 @@
 pipeline {
   environment {
-    registry = 'steveystyle/server-app'
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-    bNO = "${BUILD_NUMBER}.0"
+    REGISTRY = 'steveystyle/server-app'
+    REGISTRY_CREDENTIALS = 'dockerhub'
+    DOCKER_IMAGE = ''
+    B_NO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
   agent any
@@ -17,7 +17,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          dockerImage = docker.build "${env.registry}:${env.bNo}"
+          DOCKER_IMAGE = docker.build "${env.REGISTRY}:${env.B_NO}"
         }
       }
     }
@@ -25,9 +25,9 @@ pipeline {
     stage('Push Image') {
       steps {
         script {
-          docker.withRegistry('', env.registryCredential) {
-            dockerImage.push("${env.bNo}")
-            dockerImage.push('latest')
+          docker.withRegistry('', env.REGISTRY_CREDENTIALS) {
+            DOCKER_IMAGE.push("${env.B_NO}")
+            DOCKER_IMAGE.push('latest')
           }
         }
       }
@@ -36,16 +36,14 @@ pipeline {
     stage('Build Test') {
       steps {
         script {
-          dockerImage.inside {
+          DOCKER_IMAGE.inside {
             try {
-              def ipString = sh(script: 'ip addr | grep global', returnStdout: true).trim()
-              echo "${ipString}"
-              def ipStringArr1 = ipString.split('/')
-              echo "${ipStringArr1[0]}"
-              def ipStringArr2 = ipStringArr1[0].split(' ')
-              echo "${ipStringArr2[1]}"
-              sh 'node server.js &'
-              sh "curl ${ipStringArr2[1]}:8080"
+              def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
+              def IP_STRING_ARR_1 = IP_STRING.split('/')
+              def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
+              //sh "curl ${IP_STRING_ARR_2[1]}:8080"
+              //sh 'node server.js &'
+              sh "curl ${IP_STRING_ARR_2[1]}:8080"
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
@@ -60,12 +58,12 @@ pipeline {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
         sh 'chmod u+x ./kubectl'
-        sh "./kubectl set image deployments/server-app server-app=${dockerImage}"
+        sh "./kubectl set image deployments/server-app server-app=${env.REGISTRY}:${env.B_NO}"
       }
-      sh'docker system prune -a --volumes'
+      sh 'docker system prune -a -f --volumes'
     }
     failure {
-      sh'docker system prune -a --volumes'
+      sh 'docker system prune -a -f --volumes'
     }
   }
 }
