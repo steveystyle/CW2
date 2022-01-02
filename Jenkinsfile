@@ -40,7 +40,7 @@ pipeline {
             try {
               def ipString = sh(script: 'ip addr | grep global', returnStdout: true).trim()
               echo "${ipString}"
-              def ipStringArr = ipString.split('/', 1)
+              def ipStringArr = ipString.split('/')
               echo "${ipStringArr[0]}"
               //sh 'node server.js &'
               //sh "${ipStrirg}:8080"
