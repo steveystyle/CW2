@@ -1,7 +1,6 @@
 node {
   withEnv(['CI=true', 'REGISTRY=steveystyle/server-app', 'REGISTRY_CREDENTIAL=dockerhub']) {
     APP = null
-    ANS =''
     B_NO = "${env.BUILD_NUMBER}.0"
     stage('Clone repository') {
       checkout scm
@@ -12,12 +11,14 @@ node {
     stage('Test Image') {
       APP.inside {
         try {
-          ANS = sh(returnStdout: true) 'node serrver.js &'
+          def ANS = sh script: "node serrver.js &", returnStatus: true
+          def ANS2 = sh script: "node server.js &", returnStatus: true
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
         }
         echo"${ANS}"
+        echo"${ANS2}"
       }
     }
     stage('Push image') {
