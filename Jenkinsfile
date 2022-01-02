@@ -19,7 +19,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          env.dockerImage = docker.build "${env.registry}:${env.bNo}"
+          dockerImage = docker.build "${env.registry}:${env.bNo}"
         }
       }
     }
@@ -28,7 +28,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('', env.registryCredential) {
-            env.dockerImage.push()
+            dockerImage.push()
           }
         }
       }
