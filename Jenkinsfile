@@ -24,8 +24,8 @@ node {
         }
       }
     }
-    stage('Test withrun'){
-      APP.withRun('-rm -it'){
+    stage('Test withrun') {
+      APP.withRun('--rm --it') {
         echo 'hello2'
       }
     }
