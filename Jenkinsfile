@@ -16,9 +16,9 @@ node {
     stage('Test image') {
       APP.inside {
         try {
-          echo"${localhost}"
+          echo"${hostname}"
           echo'localhost'
-          echo"${env.localhost}"
+          echo"${env.hostname}"
           echo 'hello'
           // sh 'node server.js &'
         } catch (err) {
