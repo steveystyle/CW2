@@ -41,7 +41,7 @@ pipeline {
             try {
               ans3 = fileExists file: 'serrver.js'
               echo"${ans3}"
-              sh 'node serrver.js & || { echo 'my_command failed' ; exit 1; }'
+              sh 'node serrver.js & || echo 'my_command failed' ; exit 1; '
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
