@@ -27,7 +27,8 @@ pipeline {
       steps {
         script {
           docker.withRegistry('', env.registryCredential) {
-            dockerImage.push()
+            dockerImage.push("${env.bNo}")
+            dockerImage.push('latest')
           }
         }
       }
@@ -36,7 +37,7 @@ pipeline {
     stage('Build Test') {
       steps {
         script {
-          env.dockerImage.inside {
+          dockerImage.inside {
             try {
               env.ipString = sh(script: 'ip addr | grep global', returnStdout: true)
               echo "${env.ipString}"
