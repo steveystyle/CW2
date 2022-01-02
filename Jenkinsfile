@@ -14,10 +14,10 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside {
+      APP.inside('-p 8080:8080') {
         try {
-          echo 'InetAddress.localHost.hostAddress'
-         // sh 'node server.js &'
+          sh 'curl localhost:8080'
+        // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
