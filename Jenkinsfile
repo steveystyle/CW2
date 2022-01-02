@@ -14,10 +14,16 @@ node {
     }
     stage('Test image') {
       APP.inside {
-          catchError(message: 'ERROR', stageResult: 'FAILURE') {
-          sh 'node serrver.js &'
-          }
+        try {
+          sh 'node serrver.js &; exit 1'
+        } catch (err) {
+          echo "Caught: ${err}"
+          currentBuild.result = 'FAILURE'
         }
+      }
+    }
+    stage('Test2'){
+      echo"${env.currentBuild.result}"
     }
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
