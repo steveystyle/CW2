@@ -5,20 +5,13 @@ node {
     stage('Clone repository') {
       checkout scm
     }
-    stage('Test') {
-      echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
-      echo"${env.REGISTRY}:${B_NO}"
-      sh'docker ps'
-      sh'env'
-    }
     stage('Build image') {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
-    stage('Test image') {
+    stage('Test Image') {
       APP.inside {
         try {
-          sh 'env'
-          sh 'node server.js &'
+          sh 'node serrver.js &'
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
