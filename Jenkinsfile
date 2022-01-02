@@ -38,7 +38,7 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              def ipString = sh 'ip addr | grep global'
+              def ipString = sh(script: 'ip addr | grep global', returnStdout: true).trim()
               echo "${ipString}"
               def ipStringArr = ipString.split('/', 1)
               echo "${ipStringArr[0]}"
