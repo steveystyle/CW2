@@ -1,15 +1,16 @@
 node {
   
   def app
+  def B_NO = "${env.BUILD_NUMBER}.0"
     
-  withEnv(['CI=true','REGISTRY=steveystyle/server-app','REGISTRY_CREDENTIAL=dockerhub','B_NO=BUILD_NUMBER']){
+  withEnv(['CI=true','REGISTRY=steveystyle/server-app','REGISTRY_CREDENTIAL=dockerhub']){
     stage('Clone repository') {
         checkout scm
     }
     
     stage("Test"){
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
-      echo"${env.REGISTRY}:${env.B_NO}"
+      echo"${env.REGISTRY}:B_NO"
     }
 
     stage('Build image') {
