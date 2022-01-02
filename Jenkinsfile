@@ -24,6 +24,11 @@ node {
         }
       }
     }
+    stage('Test withrun'){
+      APP.withRun('-rm -it'){
+        echo 'hello2'
+      }
+    }
     stage('Push image') {
       docker.withRegistry('', REGISTRY_CREDENTIAL) {
             APP.push("${B_NO}")
