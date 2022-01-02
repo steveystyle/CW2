@@ -8,7 +8,7 @@ node {
     }
 
     stage('Build image') {
-      app = docker.build(${REGISTRY})
+      app = docker.build(REGISTRY)
     }
 
     stage('Test image') {
@@ -18,8 +18,8 @@ node {
     }
 
     stage('Push image') {
-      docker.withRegistry('', ${REGISTRY_CREDENTIAL}) {
-            app.push(${B_No})
+      docker.withRegistry('', REGISTRY_CREDENTIAL) {
+            app.push(B_No)
             app.push("latest")
         }
     }
@@ -30,14 +30,14 @@ node {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
         sh 'chmod u+x ./kubectl'
-        sh "./kubectl set image deployments/server-app server-app=${REGISTRY}:${B_No}"
+        sh "./kubectl set image deployments/server-app server-app=REGISTRY:B_No"
       }
-      sh "docker rmi ${REGISTRY}:${B_No}"
-      sh "docker rmi app"
+      sh 'docker rmi REGISTRY:B_No'
+      sh 'docker rmi app'
     }
     failure{
-        sh "docker rmi ${REGISTRY}:${B_No}"
-        sh "docker rmi app"
+        sh 'docker rmi REGISTRY:B_No'
+        sh 'docker rmi app'
     }
   }
 }
