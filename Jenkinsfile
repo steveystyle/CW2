@@ -14,7 +14,7 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside {
+      APP.inside('-it') {
         try {
           echo 'hello'
           // sh 'node server.js &'
