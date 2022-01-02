@@ -14,10 +14,10 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside() {
+      APP.inside {
         try {
-          sh 'grep "IPAddress"'
-        // sh 'node server.js &'
+          echo 'hello'
+          // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
           currentBuild.result = 'FAILURE'
