@@ -4,6 +4,7 @@ pipeline {
     registryCredential = 'dockerhub'
     dockerImage = ''
     ipString = ''
+    ipStringArr[] = ''
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
@@ -40,8 +41,8 @@ pipeline {
             try {
               env.ipString = sh(script: 'ip addr | grep global', returnStdout: true)
               echo "${env.ipString}"
-              env.ipString = env.ipString.split('/', 1)
-              echo "${env.ipString}"
+              env.ipStringArr[] = env.ipString.split('/', 1)
+              echo "${env.ipStringArr[0]}"
               //sh 'node server.js &'
               //sh "${ipStrirg}:8080"
             } catch (err) {
