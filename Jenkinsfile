@@ -40,8 +40,8 @@ pipeline {
           dockerImage.inside {
             try {
               ans3 = fileExists file: 'serrver.js'
-              sh 'curl 172.17.0.1:8080'
-              sh 'curl 192.168.99.1:8080'
+              sh 'ip addr | grep global'
+              //sh 'curl 172.17.0.1:8080'
 
               //sh ('node server.js; kill')
             } catch (err) {
