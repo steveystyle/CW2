@@ -9,10 +9,11 @@ node {
     
     stage("Test"){
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
+      echo"${env.REGISTRY}:${env.B_NO}"
     }
 
     stage('Build image') {
-      app = docker.build(REGISTRY:B_No)
+      app = docker.build("${env.REGISTRY}:${env.BUILD_NUMBER}.0")
     }
 
     stage('Test image') {
