@@ -38,14 +38,9 @@ pipeline {
         script {
           try {
             DOCKER_IMAGE.inside {
-              when {
-                not{
-                  fileExists file: 'serrver.js'
-                }
-                steps {
-                  currentBuild.result = 'failure'
-                  error('Server.js file missing Image Build fail')
-                }
+              if (!fileExists file: 'serrver.js'){
+                currentBuild.result = 'failure'
+                error('Server.js file missing Image Build fail')
               }
               try {
                 def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
@@ -59,7 +54,7 @@ pipeline {
               }
             }
           } catch (e) {
-            echo "Caught: ${err}"
+            echo "Caught: ${e}"
             currentBuild.result = 'failure'
           }
         }
