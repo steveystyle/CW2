@@ -1,6 +1,6 @@
 FROM node:6.14.2
 
-Expose 8080
+Expose 8000
 
 Copy server.js .
 
