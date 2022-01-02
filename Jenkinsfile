@@ -16,7 +16,7 @@ node {
     stage('Test image') {
       APP.inside() {
         try {
-          sh 'curl localhost:8000'
+          sh 'grep "IPAddress"'
         // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
