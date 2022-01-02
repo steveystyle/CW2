@@ -44,8 +44,8 @@ pipeline {
               echo "${ipStringArr1[0]}"
               def ipStringArr2 = ipStringArr1[0].split(' ')
               echo "${ipStringArr2[1]}"
-              //sh 'node server.js &'
-              //sh "${ipStrirg}:8080"
+              sh 'node server.js &'
+              sh "${ipStringArr2[1]}:8080"
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
