@@ -3,7 +3,6 @@ pipeline {
     registry = 'steveystyle/server-app'
     registryCredential = 'dockerhub'
     dockerImage = ''
-    result = ''
     bNO = "${BUILD_NUMBER}.0"
     CI = 'true'
   }
@@ -39,16 +38,16 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              // ans3 = fileExists file: 'serrver.js'
-              sh 'ip addr | grep global'
+              ipString = sh 'ip addr show eth0 | awk '/inet / { gsub(/\/.*/,'',$2); print $2 } ''
+              echo ipString
               sh 'node server.js &'
-              sh 'curl 172.17.0.2:8080'
+              sh "${ipStrirg}:8080"
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
             }
           }
-        } 
+        }
       }
     }
   }
