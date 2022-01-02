@@ -8,6 +8,7 @@ node {
     stage('Test') {
       echo"${env.REGISTRY}:${env.BUILD_NUMBER}.0"
       echo"${env.REGISTRY}:${B_NO}"
+      echo 'InetAddress.localHost.hostAddress'
     }
     stage('Build image') {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
@@ -15,7 +16,7 @@ node {
     stage('Test image') {
       APP.inside {
         try {
-          sh 'curl localhost:8080'
+          echo 'InetAddress.localHost.hostAddress'
          // sh 'node server.js &'
         } catch (err) {
           echo "Caught: ${err}"
