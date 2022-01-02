@@ -13,8 +13,10 @@ node {
       APP = docker.build("${env.REGISTRY}:${B_NO}")
     }
     stage('Test image') {
-      APP.inside {
-        sh 'node serrver.js &'
+      catchError(message: 'ERROR', stageResult: 'FAILURE') {
+        APP.inside {
+          sh 'node serrver.js &'
+        }
       }
     }
     stage('Push image') {
@@ -25,18 +27,3 @@ node {
     }
   }
 }
-post {
-  success {
-    withKubeConfig([credentialsId: 'mykubeconfig']) {
-      sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-      sh 'chmod u+x ./kubectl'
-      sh './kubectl set image deployments/server-app server-app='APP''
-    }
-      //sh 'docker rmi REGISTRY:B_No'
-      sh 'docker rmi 'APP''
-  }
-  failure {
-    sh 'docker rmi 'APP''
-  }
-}
-
