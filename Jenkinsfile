@@ -28,7 +28,9 @@ node {
     stage('Test withRun') {
       APP.withRun('--rm -it --expose=8000') {
         println InetAddress.localHost.hostAddress
-        sh 'curl -v 192.168.49.3:8000'
+        println hostAddress
+        println hostname
+
       }
     }
     stage('Push image') {
