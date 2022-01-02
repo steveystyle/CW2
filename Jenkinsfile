@@ -56,18 +56,17 @@ pipeline {
     }
   }
   post {
-    post {
-      success {
-        withKubeConfig([credentialsId: 'mykubeconfig']) {
-          sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
-          sh 'chmod u+x ./kubectl'
-          sh "./kubectl set image deployments/server-app server-app=${env.dockerImage}"
-        }
-        sh "docker rmi ${env.dockerImage}"
+    success {
+      withKubeConfig([credentialsId: 'mykubeconfig']) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'
+        sh 'chmod u+x ./kubectl'
+        sh "./kubectl set image deployments/server-app server-app=${env.dockerImage}"
       }
-      failure {
-        sh "docker rmi ${env.dockerImage}"
-      }
+      sh "docker rmi ${env.dockerImage}"
+    }
+    failure {
+      sh "docker rmi ${env.dockerImage}"
     }
   }
 }
+
