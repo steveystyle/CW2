@@ -39,13 +39,13 @@ pipeline {
         script {
           dockerImage.inside {
             try {
-              def ANS = sh(script: 'node serrver.js &', returnStatus: true)
+              ANS = sh(script: 'node serrver.js &', returnStatus: true)
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
             }
             try {
-              def ANS2 = sh(script: 'node server.js &', returnStatus: true)
+              ANS2 = sh(script: 'node server.js &', returnStatus: true)
             } catch (err) {
               echo "Caught: ${err}"
               currentBuild.result = 'failure'
