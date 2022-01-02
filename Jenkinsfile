@@ -33,11 +33,11 @@ node {
         sh "./kubectl set image deployments/server-app server-app=${REGISTRY}:${B_No}"
       }
       sh "docker rmi ${REGISTRY}:${B_No}"
-      sh "docker rmi app
+      sh "docker rmi app"
     }
     failure{
         sh "docker rmi ${REGISTRY}:${B_No}"
-        sh "docker rmi app
+        sh "docker rmi app"
     }
   }
 }
