@@ -1,7 +1,7 @@
 FROM node:6.14.2
 
-Expose 8000
+EXPOSE 8000
 
-Copy server.js .
+COPY server.js .
 
 CMD node server.js
