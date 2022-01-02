@@ -28,12 +28,12 @@ spec:
         app: server-app
     spec:
       containers:
-      - image: docker.io/steveystyle/server-app:1.0
-        imagePullPolicy: IfNotPresent
-        name: server-app
-        resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+        - image: docker.io/steveystyle/server-app:1.0
+          imagePullPolicy: IfNotPresent
+          name: server-app
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -42,7 +42,6 @@ spec:
 status: {}
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -56,17 +55,17 @@ metadata:
 spec:
   clusterIP: 10.101.43.62
   clusterIPs:
-  - 10.101.43.62
+    - 10.101.43.62
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilies:
-  - IPv4
+    - IPv4
   ipFamilyPolicy: SingleStack
   ports:
-  - nodePort: 31676
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
+    - nodePort: 31676
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
   selector:
     app: server-app
   sessionAffinity: None
