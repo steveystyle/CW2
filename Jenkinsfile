@@ -59,7 +59,7 @@ pipeline {
         script {
           try {
             DOCKER_IMAGE.withRun('--name test --network minikube') {c ->
-              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c", returnStdout: true).trim()
+              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
               echo IP_STRING
               sh "curl -v ${IP_STRING}:8080"
             }
