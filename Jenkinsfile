@@ -32,6 +32,12 @@ pipeline {
         }
       }
     }
+    
+     stage('Test2') {
+       docker.image('mysql').withRun {c ->
+        sh "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${c.id}"
+        }
+     }      
 
     stage('Build Test') {
       steps {
