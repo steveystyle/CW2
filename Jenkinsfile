@@ -36,17 +36,12 @@ pipeline {
     stage('Build Test') {
       steps {
         script {
-          try {
-            DOCKER_IMAGE.inside {
-              if (!fileExists('server.js')) {
-                currentBuild.result = 'failure'
-                error('Server.js file missing Image Build fail')
-              } 
-            }   
-          } catch (e) {
-              echo "Caught: ${e}"
+          DOCKER_IMAGE.inside {
+            if (!fileExists('serrver.js')) {
               currentBuild.result = 'failure'
-          }
+              error('Server.js file missing Image Build fail')
+            } 
+          } 
         }
       }    
     } 
@@ -71,6 +66,17 @@ pipeline {
       }
     }
   }
+  stage( 'x' ) {
+        steps{
+            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                
+              OCKER_IMAGE.withRun('--name test --network minikube') {c ->
+              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
+              echow;tjgh IP_STRING
+              sh "curl -v ${IP_STRING}:8080"
+
+        }
+    }
   post {
     success {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
