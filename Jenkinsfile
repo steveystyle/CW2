@@ -77,6 +77,7 @@ pipeline {
 
         }
     }
+        }
   post {
     success {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
