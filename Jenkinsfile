@@ -37,7 +37,7 @@ pipeline {
       steps {
         script {
           DOCKER_IMAGE.inside {
-            if (!fileExists('serrver.js')) {
+            if (!fileExists('server.js')) {
               currentBuild.result = 'failure'
               error('Server.js file missing Image Build fail')
             } 
