@@ -38,7 +38,7 @@ pipeline {
        }
        steps {         
          script {
-           DOCKER_IMAGE.withRun('--name test','--network minikube']) {c ->
+           DOCKER_IMAGE.withRun('--name test','--network minikube') {c ->
 
              
              
