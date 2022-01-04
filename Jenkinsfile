@@ -45,29 +45,12 @@ pipeline {
         }
       }    
     } 
-      
     stage('Run Test') {
       options {
         timeout(time: 30, unit: 'SECONDS')
       }
-      steps {
-        script {
-          try {
-            DOCKER_IMAGE.withRun('--name test --network minikube') {c ->
-              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
-              echo IP_STRING
-              sh "curl -v ${IP_STRING}:8080"
-            }
-          } catch (err) {
-              echo "Caught: ${err}"
-              currentBuild.result = 'failure'
-          }
-        }
-      }
-    }
-    stage( 'x' ) {
       steps{
-        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+        catchError(message: 'Run Test Fail', buildResult: 'FAILURE', stageResult: 'FAILURE') {
           script{
             DOCKER_IMAGE.withRun('--name test --network minikube') {c ->
               def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
