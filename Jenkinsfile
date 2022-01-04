@@ -38,8 +38,7 @@ pipeline {
        }
        steps {         
          script {
-           DOCKER_IMAGE.withRun('-d') {c ->
-             sh "curl ${hostIp(c)}:8080"
+           DOCKER_IMAGE.withRun() {c ->
              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c", returnStdout: true).trim()
              echo IP_STRING
              sh "curl -i ${IP_STRING}:8080"
