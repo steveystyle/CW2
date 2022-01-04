@@ -65,19 +65,18 @@ pipeline {
         }
       }
     }
+    stage( 'x' ) {
+      steps{
+        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+          DOCKER_IMAGE.withRun('--name test --network minikube') {c ->
+            def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
+            echow;tjgh IP_STRING
+            sh "curl -v ${IP_STRING}:8080"
+          }
+        }
+      }
+    } 
   }
-  stage( 'x' ) {
-        steps{
-            catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                
-              OCKER_IMAGE.withRun('--name test --network minikube') {c ->
-              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
-              echow;tjgh IP_STRING
-              sh "curl -v ${IP_STRING}:8080"
-
-        }
-    }
-        }
   post {
     success {
       withKubeConfig([credentialsId: 'mykubeconfig']) {
