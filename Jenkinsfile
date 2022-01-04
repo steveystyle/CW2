@@ -32,38 +32,24 @@ pipeline {
         }
       }
     }    
-     stage('Test2') {
-       options {
-         timeout(time: 30, unit: 'SECONDS')
-       }
-       steps {         
-         script {
-           DOCKER_IMAGE.withRun('--name test --network minikube') {c ->
-
-             
-             
-             def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
-             echo IP_STRING
-             sh "curl -v ${IP_STRING}:8080"
-             
-           }
-         }
-       }
-     }      
-
+   
     stage('Build Test') {
+      options {
+        timeout(time: 30, unit: 'SECONDS')
+      }
       steps {
         script {
           try {
-            DOCKER_IMAGE.inside('--name test --network minikube -v /var/run/docker.sock:/var/run/docker.sock') {
+            DOCKER_IMAGE.inside('--name test --network minikube -h') {
               if (!fileExists('server.js')) {
                 currentBuild.result = 'failure'
                 error('Server.js file missing Image Build fail')
               }
               try {
-                def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
-                  echo IP_STRING
-                  sh "curl -v ${IP_STRING}:8080"
+                sh 'cat /etc/hosts'
+                //def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
+                  //echo IP_STRING
+                  //sh "curl -v ${IP_STRING}:8080"
                   //def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
                   //def IP_STRING_ARR_1 = IP_STRING.split('/')
                   //def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
