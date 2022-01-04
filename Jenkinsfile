@@ -46,7 +46,7 @@ pipeline {
                 def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
                 def IP_STRING_ARR_1 = IP_STRING.split('/')
                 def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
-                sh 'node server.js &'
+                // sh 'node server.js &'
                 sh "curl ${IP_STRING_ARR_2[1]}:8080"
               } catch (err) {
                 echo "Caught: ${err}"
