@@ -45,8 +45,9 @@ pipeline {
              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
              echo IP_STRING
              sh "curl -i ${IP_STRING}:8080"
+             sh "curl -v ${IP_STRING}:8080"
              sh "curl ${IP_STRING}:8080"
-             sh "curl localhost:8080"
+             sh "curl -k localhost:8080"
              
            }
          }
