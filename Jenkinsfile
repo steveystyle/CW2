@@ -44,10 +44,7 @@ pipeline {
              
              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
              echo IP_STRING
-             sh "curl -i ${IP_STRING}:8080"
              sh "curl -v ${IP_STRING}:8080"
-             sh "curl ${IP_STRING}:8080"
-             sh "curl -k localhost:8080"
              
            }
          }
@@ -58,18 +55,21 @@ pipeline {
       steps {
         script {
           try {
-            DOCKER_IMAGE.inside {
+            DOCKER_IMAGE.inside('--name test --network minikube') {
               if (!fileExists('server.js')) {
                 currentBuild.result = 'failure'
                 error('Server.js file missing Image Build fail')
               }
               try {
-                def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
-                def IP_STRING_ARR_1 = IP_STRING.split('/')
-                def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
-                // sh 'node server.js &'
-                sh "curl ${IP_STRING_ARR_2[1]}:8080"
-              } catch (err) {
+                def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' test", returnStdout: true).trim()
+                  echo IP_STRING
+                  sh "curl -v ${IP_STRING}:8080"
+                  //def IP_STRING = sh(script: 'ip addr | grep global', returnStdout: true).trim()
+                  //def IP_STRING_ARR_1 = IP_STRING.split('/')
+                  //def IP_STRING_ARR_2 = IP_STRING_ARR_1[0].split(' ')
+                  // sh 'node server.js &'
+                  //sh "curl ${IP_STRING_ARR_2[1]}:8080"
+                } catch (err) {
                 echo "Caught: ${err}"
                 currentBuild.result = 'failure'
               }
