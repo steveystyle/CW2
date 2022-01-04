@@ -55,7 +55,7 @@ pipeline {
       steps {
         script {
           try {
-            DOCKER_IMAGE.inside('--name test --network minikube') {
+            DOCKER_IMAGE.inside('--name test --network minikube -v /var/run/docker.sock:/var/run/docker.sock') {
               if (!fileExists('server.js')) {
                 currentBuild.result = 'failure'
                 error('Server.js file missing Image Build fail')
