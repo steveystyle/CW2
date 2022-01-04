@@ -33,16 +33,33 @@ pipeline {
       }
     }
     
+     stage('Test3') {
+       options {
+         timeout(time: 30, unit: 'SECONDS')
+       }
+       steps {         
+         script {
+           DOCKER_IMAGE.withRun('-d','-p 8080:8080') {d ->
+             def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' d", returnStdout: true).trim()
+             echo IP_STRING
+             sh "curl ${IP_STRING}:8080"
+             sh "curl ${hostIp(d)}:8080"
+           }
+         }
+       }
+     }
+    
      stage('Test2') {
        options {
          timeout(time: 30, unit: 'SECONDS')
        }
-       steps {
+       steps {         
          script {
-           DOCKER_IMAGE.withRun {c ->
+           DOCKER_IMAGE.withRun('-d') {c ->
              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c", returnStdout: true).trim()
              echo IP_STRING
              sh "curl ${IP_STRING}:8080"
+             sh "curl ${hostIp(c)}:8080"
            }
          }
        }
