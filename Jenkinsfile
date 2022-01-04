@@ -35,13 +35,12 @@ pipeline {
     
      stage('Test2') {
        options {
-         timeout(time: 10, unit: 'SECONDS')
+         timeout(time: 30, unit: 'SECONDS')
        }
        steps {
          script {
            DOCKER_IMAGE.withRun {c ->
-             def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${c.name}", returnStdout: true).trim()
-             echo c.name
+             def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c", returnStdout: true).trim()
              echo c
              echo IP_STRING
              sh "curl ${IP_STRING}:8080"
