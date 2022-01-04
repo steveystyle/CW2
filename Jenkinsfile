@@ -36,7 +36,7 @@ pipeline {
      stage('Test2') {
        steps {
          script {
-           docker.image('mysql').withRun {c ->
+           DOCKER_IMAGE.withRun {c ->
              sh "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${c.id}"
            }
          }
