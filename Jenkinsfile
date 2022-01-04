@@ -39,7 +39,7 @@ pipeline {
        steps {         
          script {
            DOCKER_IMAGE.withRun() {c ->
-             echo HOSTNAME.IP
+
              
              
              def IP_STRING = sh(script: "docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' c", returnStdout: true).trim()
